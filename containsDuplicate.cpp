@@ -1,48 +1,28 @@
-class Solution {
-public:
-    bool containsDuplicate(vector<int>& nums) {
-        unordered_set<int> seen;
-        for (int num : nums) {
-            if (seen.find(num) != seen.end()) {
-                return true;  // Duplicate found
-            }
-            seen.insert(num);  // Add the current number to the set
-        }
-        return false;  // No duplicates found
-    }
-};
 
-
+#include <iostream>
+#include <vector>
+using namespace std;
 
 class Solution {
 public:
-    // Function to sort the array using Bubble Sort
-    void bubbleSort(vector<int>& nums) {
+    int missingNumber(vector<int>& nums) {
         int n = nums.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (nums[j] > nums[j + 1]) {
-                    // Swap nums[j] and nums[j + 1]
-                    int temp = nums[j];
-                    nums[j] = nums[j + 1];
-                    nums[j + 1] = temp;
-                }
-            }
+        int expectedSum = (n * (n + 1)) / 2;  // Sum of numbers from 0 to n
+        int actualSum = 0;
+        
+        // Sum the elements in the nums array
+        for (int num : nums) {
+            actualSum += num;
         }
-    }
 
-    // Function to check for duplicates
-    bool containsDuplicate(vector<int>& nums) {
-        // Sort the array
-        bubbleSort(nums);
-
-        // Check for consecutive duplicates
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[i] == nums[i - 1]) {
-                return true; // Duplicate found
-            }
-        }
-        return false; // No duplicates
+        // The missing number is the difference between expected and actual sum
+        return expectedSum - actualSum;
     }
 };
-s
+
+int main() {
+    Solution solution;
+    vector<int> nums = {3, 0, 1};  // Example input
+    cout << "Missing Number: " << solution.missingNumber(nums) << endl;
+    return 0;
+}
